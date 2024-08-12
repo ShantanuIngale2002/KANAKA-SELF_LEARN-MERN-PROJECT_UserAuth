@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-
+import userRoutes from "./routes/user.route.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -21,3 +21,6 @@ const app = express();
 app.listen(3000, () => {
     console.log("Server listening on localhost:3000...");
 });
+
+// route-path : /api/user   : working @ lh:3000/api/user
+app.use("/api/user", userRoutes);
