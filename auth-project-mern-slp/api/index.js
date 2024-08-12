@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import userRoutes from "./routes/user.route.js";
+import authRoutes from "./routes/auth.route.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -17,10 +18,13 @@ mongoose
 // app init
 const app = express();
 
+app.use(express.json()); // accepts json
+
 // app listen
 app.listen(3000, () => {
     console.log("Server listening on localhost:3000...");
 });
 
-// route-path : /api/user   : working @ lh:3000/api/user
-app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes); // User > route-path : "/api/user"
+
+app.use("/api/auth", authRoutes); // Auth > route-path : "/api/auth"
