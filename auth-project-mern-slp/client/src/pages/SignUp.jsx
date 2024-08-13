@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const initData = { username: "", email: "", password: "" };
     const [formData, setFormData] = useState(initData);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
-        console.log({ [e.target.id]: e.target.value });
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
@@ -24,10 +24,12 @@ const SignUp = () => {
             });
             const data = await res.json();
             setLoading(false);
-            if (!data.success) {
+            if (data.success === false) {
                 setError(true);
                 return;
             }
+            console.log("Signed Up : " + formData.username);
+            navigate("/sign-in"); // goto signin page
         } catch (err) {
             // does not work here
         } finally {
@@ -35,7 +37,7 @@ const SignUp = () => {
         }
     };
 
-    console.log(formData);
+    //console.log(formData);
 
     return (
         <div className="p-3 max-w-lg mx-auto">
@@ -76,7 +78,7 @@ const SignUp = () => {
                 <p>Have an account?</p>
                 <Link to="/sign-in">
                     <span className="text-blue-500 hover:cursor-pointer">
-                        Sign in
+                        Sign-in
                     </span>
                 </Link>
             </div>
