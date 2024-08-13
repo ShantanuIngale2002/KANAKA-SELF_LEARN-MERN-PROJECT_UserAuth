@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import userSlice, {
+    signInStart,
+    signInSuccess,
+    signInFailure,
+} from "../redux/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const SignIn = () => {
     const navigate = useNavigate();
     const initData = { email: "", password: "" };
     const [formData, setFormData] = useState(initData);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    /*const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);*/
+    const { loading, error } = useSelector((state) => state.user); // getting from state: user
+    const dispatch = useDispatch(); // to use redux-hooks
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -15,25 +23,28 @@ const SignIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // on-submit dont-refresh
         try {
-            setLoading(true);
-            setError(false);
+            /*setLoading(true);
+            setError(false);*/
+            dispatch(signInStart()); // userSlice-reducer
             const res = await fetch("/api/auth/signin", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
-            setLoading(false);
+            //setLoading(false);
             if (data.success === false) {
-                setError(true);
+                //setError(true);
+                dispatch(signInFailure(data)); // userSlice-reducer
                 return;
             }
+            dispatch(signInSuccess(data)); // userSlice-reducer
             console.log("Signed In : " + data.username);
             navigate("/"); // goto home page
         } catch (err) {
-            // does not work here
-        } finally {
-            // setFormData(initData);
+            /*setLoading(false);
+            setError(true);*/
+            dispatch(signInFailure(err)); // userSlice-reducer
         }
     };
 
@@ -75,7 +86,7 @@ const SignIn = () => {
                 </Link>
             </div>
             <p className="text-red-500 mt-5 text-center">
-                {error && "Something went wrong!!"}
+                {error ? error.message || "Something went wrong!!" : ""}
             </p>
         </div>
     );

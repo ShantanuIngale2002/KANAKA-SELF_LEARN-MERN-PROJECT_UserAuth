@@ -31,9 +31,8 @@ const SignUp = () => {
             console.log("Signed Up : " + formData.username);
             navigate("/sign-in"); // goto signin page
         } catch (err) {
-            // does not work here
-        } finally {
-            // setFormData(initData);
+            /*setLoading(false);
+            setError(true);*/
         }
     };
 
@@ -83,7 +82,7 @@ const SignUp = () => {
                 </Link>
             </div>
             <p className="text-red-500 mt-5 text-center">
-                {error && "Something went wrong!!"}
+                {error ? error || "Something went wrong!!" : ""}
             </p>
         </div>
     );
