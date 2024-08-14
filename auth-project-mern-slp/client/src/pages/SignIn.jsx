@@ -74,7 +74,7 @@ const SignIn = () => {
                     className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-60"
                     disabled={loading}
                 >
-                    {loading ? "Processing..." : "Signup"}
+                    {loading ? "Processing..." : "Sign in"}
                 </button>
             </form>
             <div className="flex gap-2 mt-5 justify-center">
