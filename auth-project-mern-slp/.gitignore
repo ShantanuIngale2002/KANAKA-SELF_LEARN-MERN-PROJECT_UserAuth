@@ -7,7 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# node modules getting ignored here
 node_modules
+
 dist
 dist-ssr
 *.local
@@ -22,4 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# .env contains confidential db access tokens/info hence ignored
 .env
