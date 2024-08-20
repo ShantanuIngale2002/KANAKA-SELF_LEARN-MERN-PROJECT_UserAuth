@@ -6,6 +6,7 @@ import userSlice, {
     signInFailure,
 } from "../redux/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import OAuth from "../components/OAuth";
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -76,6 +77,7 @@ const SignIn = () => {
                 >
                     {loading ? "Processing..." : "Sign in"}
                 </button>
+                <OAuth /> {/* OAuth component */}
             </form>
             <div className="flex gap-2 mt-5 justify-center">
                 <p>Don't have an account?</p>
