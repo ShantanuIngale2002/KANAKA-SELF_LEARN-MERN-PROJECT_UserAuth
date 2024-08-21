@@ -57,11 +57,30 @@ const Profile = () => {
                     onChange={(e) => handleImageUpdate(e.target.files[0])}
                 />
                 <img
-                    src={currentUser.profilePicture}
+                    src={formData.profilePicture || currentUser.profilePicture} // temporary for now
                     alt="PP"
                     className="h-24 w-24 self-center rounded-full cursor-pointer object-cover mt-2"
                     onClick={() => fileRef.current.click()}
                 />
+                <p className="text-sm self-center">
+                    {imageError ? ( // if error
+                        <span className="text-red-700">
+                            Error Uploading Image | Please check file format and
+                            size less than 2mb.
+                        </span>
+                    ) : imagePercent > 0 && imagePercent < 100 ? ( // else if !error and percent > 0 and < 100
+                        <span className="text-slate-700">
+                            {`Uploading : ${imagePercent}%`}
+                        </span>
+                    ) : imagePercent === 100 ? ( // else if percent is 100
+                        <span className="text-green-700">
+                            Image uploaded successfully
+                        </span>
+                    ) : (
+                        // else nothing
+                        ""
+                    )}
+                </p>
                 <input
                     defaultValue={currentUser.username}
                     type="text"
